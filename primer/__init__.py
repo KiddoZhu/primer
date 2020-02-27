@@ -20,5 +20,5 @@ def config(out="stdout"):
         module.log = lambda *args: print(*args, file=out)
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.0a0"
 config("stdout")

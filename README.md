@@ -1,12 +1,22 @@
 Primer
 ======
 
-Primer is a lightweight toolbox for debugging and benchmarking Python code.
+Primer is a lightweight toolkit for debugging and benchmarking Python code.
 
 With only one line inserted, primer improves your coding experience.
 
 ```python
 from primer import debug, profile, performance
+```
+
+Install
+-------
+
+Requirements
+- Python >= 3.5
+
+```bash
+pip install primer-kit
 ```
 
 Debug
@@ -34,7 +44,7 @@ Time and memory profilers measure the duration and memory allocation for some co
 with profile.time(), profile.memory():
 ```
 
-They can also be used as decorators over functions. A log frequency of 10 outputs the duration once per 10 calls.
+They can also be used as decorators over functions. A log frequency of 10 outputs results once per 10 calls.
 
 ```python
 @profile.time(log_frequency=10)
@@ -57,6 +67,6 @@ Shared ndarray can be passed across processes without copy, which saves memory b
 import numpy as np
 import multiprocessing as mp
 
-arrays = [performance.SharedNDArray(np.random.rand(100000) for _ in range(4)]
+arrays = [performance.SharedNDArray(np.random.rand(100000)) for _ in range(4)]
 results = mp.Pool(4).map(np.sum, arrays)
 ```
