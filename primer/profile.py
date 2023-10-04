@@ -10,6 +10,16 @@ import psutil
 import primer
 
 
+def _format_size(size):
+    abs_size = abs(size)
+    units = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
+    for unit in units:
+        if abs_size < 1024.0:
+            return "%.2f %s" % (size, unit)
+        abs_size /= 1024.0
+    return "%.2f %s" % (size, 'PiB')
+
+
 class ContextProfiler(object):
     """
     Abstract class for context profilers.
@@ -170,20 +180,6 @@ class GPUMemory(GPUContextProfiler):
         import torch
         self.end = torch.cuda.memory_allocated(self.device)
         return _format_size(self.end - self.start)
-
-
-def _format_size(size):
-    abs_size = abs(size)
-    if abs_size >= 2 ** 40:
-        return "%g TiB" % (size / 2 ** 40)
-    elif abs_size >= 2 ** 30:
-        return "%g GiB" % (size / 2 ** 30)
-    elif abs_size >= 2 ** 20:
-        return "%g MiB" % (size / 2 ** 20)
-    elif abs_size >= 2 ** 10:
-        return "%g KiB" % (size / 2 ** 10)
-    else:
-        return "%g B" % (size)
 
 
 time = Time
